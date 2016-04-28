@@ -36,7 +36,7 @@ RUN cd && wget -nv -O - http://www.drive5.com/muscle/downloads3.8.31/muscle3.8.3
 	&& mv muscle3.8.31_i86linux64 /usr/local/bin/muscle
 
 # download mtoolbox
-RUN cd && wget -nv -O - 'http://downloads.sourceforge.net/project/mtoolbox/MToolBox_v0.3.1.tar.gz' -O - | tar -xz
+RUN cd && wget -nv -O - 'http://downloads.sourceforge.net/project/mtoolbox/MToolBox.v0.3.3.tar.gz' -O - | tar -xz
 
 # download genomes
 #RUN mkdir -p /usr/local/share/genomes/ && cd /usr/local/share/genomes/ \ 
@@ -49,7 +49,7 @@ RUN cd && wget -nv -O - 'http://downloads.sourceforge.net/project/mtoolbox/MTool
 #RUN mkdir -p /usr/local/share/gmapdb/ && cd /usr/local/share/gmapdb/ \
 #	&& wget -nv http://sourceforge.net/projects/mtoolbox/files/genome_index/chrRCRS.tar.gz -O - | tar xz 
 
-ENV PATH /root/MToolBox_v0.3.1:$PATH
+ENV PATH /root/MToolBox:$PATH
 
 WORKDIR /workdir
 
