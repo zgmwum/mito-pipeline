@@ -27,8 +27,6 @@ RUN apt-get update && apt-get install -y \
 RUN cd && wget -nv -O - 'https://sourceforge.net/projects/samtools/files/samtools/0.1.19/samtools-0.1.19.tar.bz2' | tar -xj \
 	&& cd samtools-0.1.19 && make
 
-ENV PATH /root/samtools-0.1.19:$PATH
-
 # install gmap
 RUN cd && wget -nv -O - 'http://research-pub.gene.com/gmap/src/gmap-gsnap-2016-05-01.tar.gz'| tar -xz \
 	&& cd gmap-2016-05-01 && ./configure --prefix /usr/local && make && make install
@@ -39,8 +37,6 @@ RUN cd && wget -nv -O - http://www.drive5.com/muscle/downloads3.8.31/muscle3.8.3
 
 # download mtoolbox
 RUN cd && wget -nv -O - 'http://downloads.sourceforge.net/project/mtoolbox/MToolBox.v0.3.3.tar.gz' -O - | tar -xz
-
-ENV PATH /root/MToolBox_v0.3.3:$PATH
 
 # download genomes
 #RUN mkdir -p /usr/local/share/genomes/ && cd /usr/local/share/genomes/ \ 
@@ -56,6 +52,10 @@ ENV PATH /root/MToolBox_v0.3.3:$PATH
 #   && gmap_build -D . -d chrRSRS ../genomes/chrRSRS.fa -s numeric-alpha \
 #   && gmap_build -D . -d hg19RSRS ../genomes/hg19RSRS.fa -s numeric-alpha \
 #   && cd 
+
+ENV PATH /root/MToolBox/:$PATH
+
+ENV PATH /root/samtools-0.1.19:$PATH
 
 WORKDIR /workdir
 
