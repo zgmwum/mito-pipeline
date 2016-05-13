@@ -24,12 +24,12 @@ RUN apt-get update && apt-get install -y \
 	default-jdk
 
 # install samtools
-RUN cd && wget -nv -O - 'https://github.com/samtools/samtools/releases/download/1.2/samtools-1.2.tar.bz2' | tar -xj \
-	&& cd samtools-1.2 && make prefix=/usr/local/bin/samtools && make install
+RUN cd && wget -nv -O - 'https://sourceforge.net/projects/samtools/files/samtools/0.1.19/samtools-0.1.19.tar.bz2' | tar -xj \
+	&& cd samtools-0.1.19 && make
 
 # install gmap
-RUN  cd && wget -nv -O - 'https://github.com/julian-gehring/GMAP-GSNAP/archive/2012-06-02.tar.gz' | tar -xz \
-	&& cd GMAP-GSNAP-2012-06-02 && ./configure --prefix /usr/local && make && make install
+RUN cd && wget -nv -O - 'http://research-pub.gene.com/gmap/src/gmap-gsnap-2016-05-01.tar.gz'| tar -xz \
+	&& cd gmap-2016-05-01 && ./configure --prefix /usr/local && make && make install
 
 # install muscle
 RUN cd && wget -nv -O - http://www.drive5.com/muscle/downloads3.8.31/muscle3.8.31_i86linux64.tar.gz | tar -xz \
@@ -40,16 +40,22 @@ RUN cd && wget -nv -O - 'http://downloads.sourceforge.net/project/mtoolbox/MTool
 
 # download genomes
 #RUN mkdir -p /usr/local/share/genomes/ && cd /usr/local/share/genomes/ \ 
-#	&& wget -nv https://sourceforge.net/projects/mtoolbox/files/genome_fasta/chrRCRS.fa.tar.gz -O - | tar xz \
-#	&& wget -nv https://sourceforge.net/projects/mtoolbox/files/genome_fasta/chrRCRS.fa.fai \
-#	&& wget -nv https://sourceforge.net/projects/mtoolbox/files/genome_fasta/hg19RCRS.fa.tar.gz -O - | tar xz \
-#	&& wget -nv https://sourceforge.net/projects/mtoolbox/files/genome_fasta/hg19RCRS.fa.fai
+#	&& wget http://sourceforge.net/projects/mtoolbox/files/genome_fasta/chrM.fa.gz | gunzip \
+#	&& wget http://sourceforge.net/projects/mtoolbox/files/genome_fasta/hg19RCRS.fa.gz | gunzip \
+#	&& wget http://sourceforge.net/projects/mtoolbox/files/genome_fasta/chrRSRS.fa.gz | gunzip \
+#	&& wget http://sourceforge.net/projects/mtoolbox/files/genome_fasta/hg19RSRS.fa.gz | gunzip
 
 # download mtoolbox gmap indices
 #RUN mkdir -p /usr/local/share/gmapdb/ && cd /usr/local/share/gmapdb/ \
-#	&& wget -nv http://sourceforge.net/projects/mtoolbox/files/genome_index/chrRCRS.tar.gz -O - | tar xz 
+#	&& gmap_build -D . -d hg19RCRS ../genomes/hg19RCRS.fa -s numeric-alpha \
+#	&& gmap_build -D . -d chrM ../genomes/chrM.fa -s numeric-alpha \
+#   && gmap_build -D . -d chrRSRS ../genomes/chrRSRS.fa -s numeric-alpha \
+#   && gmap_build -D . -d hg19RSRS ../genomes/hg19RSRS.fa -s numeric-alpha \
+#   && cd 
 
-ENV PATH /root/MToolBox:$PATH
+ENV PATH /root/MToolBox/:$PATH
+
+ENV PATH /root/samtools-0.1.19:$PATH
 
 WORKDIR /workdir
 
